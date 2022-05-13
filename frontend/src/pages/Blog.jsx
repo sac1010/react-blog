@@ -1,55 +1,55 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import BlogCards from '../components/BlogCards'
-import { Cat } from '../components/Cat'
-import "./blog.css"
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import BlogCards from "../components/BlogCards";
+import { Cat } from "../components/Cat";
+import "./blog.css";
 
 export const Blog = () => {
-  const [blog,setBlog] = useState({})
-  const [related, setRelated] = useState([])
-  const {id} = useParams()
+  const [blog, setBlog] = useState({});
+  const [related, setRelated] = useState([]);
+  const { id } = useParams();
 
-  useEffect(()=>{
-    getData(id)        
-  },[id])
+  useEffect(() => {
+    getData(id);
+  }, [id]);
 
-  const getData = async(id)=>{
-    try{
-      const blogData = await axios.get(`http://localhost:3001/blogs/blog/${id}`)
-      const related =await axios.get(`http://localhost:3001/blogs?category=${blogData.data.category}`)
-      setBlog(blogData.data)  
-           
-      setRelated(related.data.filter((el)=>el.id!=id))
+  const getData = async (id) => {
+    try {
+      const blogData = await axios.get(
+        `http://localhost:3001/blogs/blog/${id}`
+      );
+      const related = await axios.get(
+        `http://localhost:3001/blogs?category=${blogData.data.category}`
+      );
+      setBlog(blogData.data);
+
+      setRelated(related.data.filter((el) => el.id != id));
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){
-      console.log(err)
-    }
-
-
-
-  }
+  };
   return (
-    <div className='blog'>
+    <div className="blog">
       <h2>{blog.title}</h2>
       <Cat category={blog.category}></Cat>
-      <span>{blog.date}</span> 
-      <img className='blog-img' src={blog.imgUrl} alt="" />
+      <span>{blog.date}</span>
+      <img className="blog-img" src={blog.imgUrl} alt="" />
       <p>{blog.description}</p>
       <hr />
       <br />
-      {related.length>0?<div>
-      <h2>Related posts</h2>
-      <div style={{display:"flex", flexWrap:"wrap", gap:"20px"}}>
-        {related.map((el)=>{
-          return(
-            <BlogCards {...el}></BlogCards>
-          )
-        })}
-      </div>
-      </div>:""
-    }
-
+      {related.length > 0 ? (
+        <div>
+          <h2>Related posts</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+            {related.map((el) => {
+              return <BlogCards {...el}></BlogCards>;
+            })}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
-  )
-}
+  );
+};

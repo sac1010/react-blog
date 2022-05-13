@@ -18,6 +18,6 @@ app.listen(PORT, async()=>{
       await connectDb()
       console.log(`running on port 3001`) 
   }catch(e){
-      console.log(e.message)
+      console.log(e.message) 
   }
 })
