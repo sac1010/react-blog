@@ -1,0 +1,10 @@
+.cat{
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
