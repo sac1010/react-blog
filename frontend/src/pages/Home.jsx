@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BlogCards from '../components/BlogCards';
 import "./home.css"
 import { Recent } from '../components/Recent';
-
+import jwt_decode from "jwt-decode";
 
 
 
@@ -31,6 +31,14 @@ export const Home = () => {
         setData(res.data)
       })
   }
+  
+  let userId = ""
+  const [token, setToken] = React.useState(localStorage.getItem("token") || "")
+  let loggedIn = ""
+  if(token){
+   loggedIn = jwt_decode(token)
+   userId = loggedIn.user._id
+  }
 
   const options = ["travel", "movie", "technology", "sports", "food", "fashion"]
 
@@ -39,7 +47,7 @@ export const Home = () => {
       <div className='blogs'>
       {data.map((el)=>{
         return(
-          <BlogCards key={el.id} {...el}></BlogCards>
+          <BlogCards key={el.id} title={el.title} description={el.description} _id={el._id} imgUrl={el.imgUrl} category={el.category} userId={el.userId} loggedId={userId}></BlogCards>
         )
       })}
       </div>
@@ -54,9 +62,9 @@ export const Home = () => {
         </div>
         <div className='category-filter'>
           <h3>CATEGORIES</h3>
-            {options.map((el)=>{
+            {options.map((el, i)=>{
               return(
-                <div id={el} onClick={filterCat}>{el}</div>
+                <div key={i} id={el} onClick={filterCat}>{el}</div>
               )
             })}
         </div>

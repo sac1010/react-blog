@@ -30,7 +30,7 @@ export const Blog = () => {
 
   }
   return (
-    <div className='blog'>
+    <div className='blog' >
       <h2>{blog.title}</h2>
       <Cat category={blog.category}></Cat>
       <span>{blog.date}</span> 

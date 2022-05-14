@@ -2,6 +2,7 @@ const express = require("express")
 const connectDb = require("./src/configs/db")
 const app = express()
 const blogsController = require("./src/controllers/blogs.controller")
+const likesController = require("./src/controllers/likes.controller")
 const {login, register} = require("./src/controllers/user.controller")
 const cors = require('cors')
 
@@ -10,6 +11,7 @@ app.use(express.json())
 app.use("/blogs", blogsController) 
 app.use("/login", login)
 app.use("/register", register)
+app.use("/likes", likesController)
 
 const PORT = process.env.PORT || 3001
 

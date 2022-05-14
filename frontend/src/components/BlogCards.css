@@ -22,7 +22,7 @@
 }
 .icons{
     width: 50px;
-    margin: auto;
+    align-items: center;
     display: flex;
     justify-content: space-around;
 

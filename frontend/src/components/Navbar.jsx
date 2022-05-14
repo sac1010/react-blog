@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
-import {toast, ToastContainer} from "react-toastify"
+import {toast} from "react-toastify"
 import jwt_decode from "jwt-decode";
 
 
@@ -105,6 +105,7 @@ export function Navbar() {
         setToken(res.data.token)
         toast.success("Login successful")
         setOpen(false)
+        window.location.reload()
       }).catch((err)=>{
         console.log(err.message)
         toast.error("invalid username or password")
@@ -134,6 +135,7 @@ export function Navbar() {
       <Button onClick={()=>{
         setToken("")
         localStorage.removeItem("token")
+        window.location.reload()
       }} style={{marginTop:"10px"}}  type='contained'>Logout</Button><br />
 
     </Box>

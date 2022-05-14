@@ -3,16 +3,7 @@ const express = require("express")
 const router = express.Router()
 const {auth} = require("../middlewares/auth")
 
-// router.get("/blogs", async(req, res)=>{
-//     try{
-//         const blogs = await Blogs.find().lean().exec()
-//         res.send(blogs)
-//     }
-//     catch(err){
-//         res.send(err.message)
-//     }
-    
-// })
+
 
 router.get("/blog/:id", async(req, res)=>{
     try{
