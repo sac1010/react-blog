@@ -2,7 +2,7 @@
     width: 30%;
     height: 325px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
+    max-width: 300px;
 }
 .image{
     width: 100%;

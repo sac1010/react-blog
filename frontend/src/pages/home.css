@@ -5,11 +5,11 @@
     align-items: center;
     justify-content: space-evenly;
     margin-top: 90px;
-    width: 70%;
+    width: 75%;
 }
 .right-panel{
-    width: 30%;
-    margin: auto;
+    width: 25%;
+    margin: 0 auto;
     margin-top: 60px;
     position: fixed;
     right: 0px;
@@ -29,9 +29,11 @@
     gap: 10px;
 }
 .category-filter{
-    margin-top: 30px;
+    
     text-align: center;
-    width: 100%;
+    margin: auto auto;
+    margin-top: 30px;
+    width: 90%;
 }
 .category-filter>div{
     height: 30px;

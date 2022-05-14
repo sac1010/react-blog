@@ -82,7 +82,7 @@ export function AddEdit() {
         <ToastContainer></ToastContainer>
         <h1 style={{margin:"auto"}}>{id?"edit blog":"create blog"}</h1>
       <TextField id="title" label="Title" onChange={handleInput} variant="standard" value={blog.title}/><br />
-      <textarea id="description" value={blog.description} label="Description" onChange={handleInput} placeholder='description' cols="30" rows="10"></textarea>
+      <textarea id="description" value={blog.description} label="Description" onChange={handleInput} placeholder='description' cols="30" rows="25"></textarea>
       
       <div style={{margin:"20px"}}>
       add image: <input onChange={(e)=>{handleFile(e.target.files[0])}} type="file" />
