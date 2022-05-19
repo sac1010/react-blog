@@ -15,6 +15,10 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import {toast} from "react-toastify"
 import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUser, setToken, setUser } from '../redux/actions';
+import { SET_TOKEN } from '../redux/actionType';
+
 
 
 
@@ -73,6 +77,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export function Navbar() {
+  const dispatch  = useDispatch()
+  dispatch(setToken(localStorage.getItem("token") || ""))
+  const token = useSelector((store)=>store.token)
+
 
   const navigate = useNavigate()
   
@@ -81,10 +89,11 @@ export function Navbar() {
   const handleClose = () => setOpen(false);
 
 
-  const [token, setToken] = React.useState(localStorage.getItem("token") || "")
+  // const [token, setToken] = React.useState(localStorage.getItem("token") || "")
     let loggedIn = ""
     if(token){
      loggedIn = jwt_decode(token)
+     dispatch(setUser(loggedIn))
     }
 
 
@@ -100,12 +109,14 @@ export function Navbar() {
     }
 
     const handleLogin =()=>{
-      axios.post("http://localhost:3001/login",loginData).then((res)=>{
+      axios.post("https://blog-backend-react.herokuapp.com/login",loginData).then((res)=>{
         localStorage.setItem("token", res.data.token)
-        setToken(res.data.token)
+        // setToken(res.data.token)
+        let user  = jwt_decode(res.data.token)
+        dispatch(setToken(res.data.token))
+        dispatch(setUser(user))
         toast.success("Login successful")
         setOpen(false)
-        window.location.reload()
       }).catch((err)=>{
         console.log(err.message)
         toast.error("invalid username or password")
@@ -133,9 +144,9 @@ export function Navbar() {
        Logout
       </Typography>
       <Button onClick={()=>{
-        setToken("")
+        dispatch(setToken(""))
+        dispatch(removeUser())
         localStorage.removeItem("token")
-        window.location.reload()
       }} style={{marginTop:"10px"}}  type='contained'>Logout</Button><br />
 
     </Box>

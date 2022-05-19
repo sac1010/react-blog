@@ -15,7 +15,7 @@ export const Register = () => {
         })
     }
     const register = ()=>{
-        axios.post("http://localhost:3001/register", regData).then((res)=>{
+        axios.post("https://blog-backend-react.herokuapp.com/register", regData).then((res)=>{
         toast.success("registration successful ")
         navigate("/")
         })

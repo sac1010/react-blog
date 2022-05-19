@@ -16,8 +16,8 @@ export const Blog = () => {
 
   const getData = async(id)=>{
     try{
-      const blogData = await axios.get(`http://localhost:3001/blogs/blog/${id}`)
-      const related =await axios.get(`http://localhost:3001/blogs?category=${blogData.data.category}`)
+      const blogData = await axios.get(`https://blog-backend-react.herokuapp.com/blogs/blog/${id}`)
+      const related =await axios.get(`https://blog-backend-react.herokuapp.com/blogs?category=${blogData.data.category}`)
       setBlog(blogData.data)  
            
       setRelated(related.data.filter((el)=>el.id!=id))

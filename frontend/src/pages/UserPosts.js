@@ -7,10 +7,10 @@ export const UserPosts = () => {
     const [blogs, setBlogs] = useState([])
     const {userId} = useParams()
     useEffect(()=>{
-        axios.get(`http://localhost:3001/blogs/user/${userId}`).then((res)=>{
+        axios.get(`https://blog-backend-react.herokuapp.com/blogs/user/${userId}`).then((res)=>{
             setBlogs(res.data)
         })
-    },[])
+    },[userId])
   return (
     <div>
         <div style={{margin:"0 auto", marginTop:"100px", width:"70%", display:"flex", flexWrap:"Wrap", gap:"20px", justifyContent:"space-around", alignItems:"center"}}>

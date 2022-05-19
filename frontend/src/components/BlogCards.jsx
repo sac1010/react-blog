@@ -8,17 +8,25 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import axios from 'axios';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {toast} from "react-toastify"
+import { useSelector } from 'react-redux';
+import jwt_decode from "jwt-decode";
 
-const BlogCards = ({imgUrl, description, category, title, _id, loggedId, userId}) => {
+const BlogCards = ({imgUrl, description, category, title, _id, userId}) => {
  const [liked, setLiked] = useState(false)
  const [likeCount, setLikeCount] = useState(0)
 
+ const loggedId = useSelector((store)=>store.userId) 
+
+
+
+
+
  useEffect(()=>{
-  loggedId && axios.get(`http://localhost:3001/likes/isLiked/${loggedId}/${_id}`).then((res)=>{
+  loggedId && axios.get(`https://blog-backend-react.herokuapp.com/likes/isLiked/${loggedId}/${_id}`).then((res)=>{
     setLiked(res.data.liked)
-    console.log(loggedId)
+    
   })
-  axios.get(`http://localhost:3001/likes/${_id}`).then((res)=>{
+  axios.get(`https://blog-backend-react.herokuapp.com/likes/${_id}`).then((res)=>{
     setLikeCount(res.data.likes)
   })
  },[])
@@ -35,8 +43,9 @@ const BlogCards = ({imgUrl, description, category, title, _id, loggedId, userId}
     return;
    }
    setLiked(!liked)
-  axios.post(`http://localhost:3001/likes/like`, body).then((res)=>{
-    toast.success("post Liked")
+  axios.post(`https://blog-backend-react.herokuapp.com/likes/like`, body).then((res)=>{
+    
+    !liked?toast.success("post Liked"):toast.info("post disliked")
     setLikeCount(res.data.likes)
     
   })
@@ -75,7 +84,7 @@ const BlogCards = ({imgUrl, description, category, title, _id, loggedId, userId}
       <DeleteOutlineIcon fontSize='small'></DeleteOutlineIcon>
       </div>:""}
       <div style={{display:"flex", gap:"5px", alignItems:"center"}}>
-      {liked?<ThumbUpIcon onClick={handleLike}></ThumbUpIcon>:<ThumbUpOutlinedIcon onClick={handleLike}></ThumbUpOutlinedIcon>} 
+      {loggedId && liked?<ThumbUpIcon onClick={handleLike}></ThumbUpIcon>:<ThumbUpOutlinedIcon onClick={handleLike}></ThumbUpOutlinedIcon>} 
      <h4>{likeCount}</h4>
       </div>
 

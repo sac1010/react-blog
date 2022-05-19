@@ -14,20 +14,20 @@ export const Home = () => {
   const [data, setData] = useState([])
   const [recent, setRecent] = useState([])
   useEffect(()=>{
-    axios.get("http://localhost:3001/blogs").then((res)=>{
+    axios.get("https://blog-backend-react.herokuapp.com/blogs").then((res)=>{
     setData(res.data)
     })
   },[])
 
   useEffect(()=>{
-    axios.get(`http://localhost:3001/blogs/last`).then((res)=>{
+    axios.get(`https://blog-backend-react.herokuapp.com/blogs/last`).then((res)=>{
       setRecent(res.data)
     })
   }, [])
 
   const filterCat = (e)=>{
     const category = e.target.id
-      axios.get(`http://localhost:3001/blogs?category=${category}`).then((res)=>{
+      axios.get(`https://blog-backend-react.herokuapp.com/blogs?category=${category}`).then((res)=>{
         setData(res.data)
       })
   }

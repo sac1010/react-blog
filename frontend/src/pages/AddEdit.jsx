@@ -62,7 +62,7 @@ export function AddEdit() {
           ...blog,
           date:curDate
         }
-     const res = await axios.post("http://localhost:3001/blogs", edBlog, { headers: {"Authorization" : `Bearer ${token}`} })        
+     const res = await axios.post("https://blog-backend-react.herokuapp.com/blogs", edBlog, { headers: {"Authorization" : `Bearer ${token}`} })        
            toast.success("success")
           navigate("/")
       }catch{
