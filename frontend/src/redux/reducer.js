@@ -1,9 +1,10 @@
-import { REMOVE_USER, SET_TOKEN } from "./actionType";
+import { REMOVE_USER, SET_LOADING, SET_TOKEN } from "./actionType";
 import { SET_USER } from "./actionType";
 
 const initState = {
     token:"",
-    userId:""
+    userId:"",
+    loading:false
 }
 
 export const reducer = (state = initState, {type, payload})=>{
@@ -25,6 +26,12 @@ export const reducer = (state = initState, {type, payload})=>{
                         ...state,
                         userId:""
                     }
+
+                    case SET_LOADING:
+                        return{
+                            ...state,
+                            loading:payload
+                        }
             
     
         default:

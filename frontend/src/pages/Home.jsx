@@ -7,6 +7,8 @@ import "./home.css"
 import { Recent } from '../components/Recent';
 import jwt_decode from "jwt-decode";
 import Pagination from '@mui/material/Pagination';
+import { setLoading } from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -15,10 +17,13 @@ export const Home = () => {
   const [recent, setRecent] = useState([])
   const [pages, setPages] = useState("")
   const [curPage, setCurPage] = useState(1)
+  const dispatch = useDispatch()
   useEffect(()=>{
+    dispatch(setLoading(true))
     axios.get(`https://blog1010.herokuapp.com/blogs?page=${curPage}`).then((res)=>{
     setData(res.data.blogs)
     setPages(res.data.pages)
+    dispatch(setLoading(false))
     })
   },[curPage])
 
@@ -35,8 +40,8 @@ export const Home = () => {
       })
   }
   
-const pageChange = (e)=>{
-  setCurPage(e.target.textContent)
+const pageChange = (e, p)=>{
+  setCurPage(p) 
 }
 
   const options = ["travel", "movie", "technology", "sports", "food", "fashion"]
@@ -49,7 +54,10 @@ const pageChange = (e)=>{
           <BlogCards key={el.id} title={el.title} description={el.description} _id={el._id} imgUrl={el.imgUrl} category={el.category} userId={el.userId} ></BlogCards>
         )
       })}
-      <Pagination onChange={pageChange} style={{margin:"20px"}} count={pages} color="primary" />
+      <div style={{width:"100%", margin:"20px",display:"flex", justifyContent:"center"}}>
+      <Pagination onChange={pageChange} count={pages} color="primary" />
+      </div>
+      
       </div>
       <div className='right-panel'>
         <div className='recent-posts'>

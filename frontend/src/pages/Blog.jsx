@@ -1,11 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import BlogCards from '../components/BlogCards'
 import { Cat } from '../components/Cat'
 import Comment from '../components/Comment'
+import { setLoading } from '../redux/actions'
 import "./blog.css"
 
 export const Blog = () => {
@@ -18,8 +19,9 @@ export const Blog = () => {
   useEffect(()=>{
     getData(id)        
   },[id])
-
+  const dispatch = useDispatch()
   const getData = async(id)=>{
+    dispatch(setLoading(true))
     try{
       const blogData = await axios.get(`https://blog1010.herokuapp.com/blogs/blog/${id}`)
       const related =await axios.get(`https://blog1010.herokuapp.com/blogs?category=${blogData.data.category}`)
@@ -28,6 +30,7 @@ export const Blog = () => {
       setBlog(blogData.data)  
       setComments(comments.data)     
       setRelated(related.data.blogs.filter((el)=>el.id!=id))
+      dispatch(setLoading(false))
     }
     catch(err){
       console.log(err)

@@ -1,4 +1,4 @@
-import { REMOVE_USER, SET_TOKEN } from "./actionType";
+import { REMOVE_USER, SET_LOADING, SET_TOKEN } from "./actionType";
 import { SET_USER } from "./actionType";
 
 export const setToken = (token)=>{
@@ -18,6 +18,14 @@ export const setUser = (user)=>{
 export const removeUser = ()=>{
     return{
         type:REMOVE_USER 
+        
+    }
+}
+
+export const setLoading = (payload)=>{
+    return{
+        type:SET_LOADING,
+        payload:payload 
         
     }
 }
