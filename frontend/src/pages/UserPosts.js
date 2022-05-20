@@ -7,7 +7,7 @@ export const UserPosts = () => {
     const [blogs, setBlogs] = useState([])
     const {userId} = useParams()
     useEffect(()=>{
-        axios.get(`https://blog-backend-react.herokuapp.com/blogs/user/${userId}`).then((res)=>{
+        axios.get(`https://blog1010.herokuapp.com/blogs/user/${userId}`).then((res)=>{
             setBlogs(res.data)
         })
     },[userId])

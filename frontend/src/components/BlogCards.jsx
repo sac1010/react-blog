@@ -22,11 +22,11 @@ const BlogCards = ({imgUrl, description, category, title, _id, userId}) => {
 
 
  useEffect(()=>{
-  loggedId && axios.get(`https://blog-backend-react.herokuapp.com/likes/isLiked/${loggedId}/${_id}`).then((res)=>{
+  loggedId && axios.get(`https://blog1010.herokuapp.com/likes/isLiked/${loggedId}/${_id}`).then((res)=>{
     setLiked(res.data.liked)
     
   })
-  axios.get(`https://blog-backend-react.herokuapp.com/likes/${_id}`).then((res)=>{
+  axios.get(`https://blog1010.herokuapp.com/likes/${_id}`).then((res)=>{
     setLikeCount(res.data.likes)
   })
  },[])
@@ -43,7 +43,7 @@ const BlogCards = ({imgUrl, description, category, title, _id, userId}) => {
     return;
    }
    setLiked(!liked)
-  axios.post(`https://blog-backend-react.herokuapp.com/likes/like`, body).then((res)=>{
+  axios.post(`https://blog1010.herokuapp.com/likes/like`, body).then((res)=>{
     
     !liked?toast.success("post Liked"):toast.info("post disliked")
     setLikeCount(res.data.likes)

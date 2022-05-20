@@ -109,7 +109,7 @@ export function Navbar() {
     }
 
     const handleLogin =()=>{
-      axios.post("https://blog-backend-react.herokuapp.com/login",loginData).then((res)=>{
+      axios.post("https://blog1010.herokuapp.com/login",loginData).then((res)=>{
         localStorage.setItem("token", res.data.token)
         // setToken(res.data.token)
         let user  = jwt_decode(res.data.token)

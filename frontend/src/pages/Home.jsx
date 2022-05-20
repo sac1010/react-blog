@@ -6,39 +6,38 @@ import BlogCards from '../components/BlogCards';
 import "./home.css"
 import { Recent } from '../components/Recent';
 import jwt_decode from "jwt-decode";
-
+import Pagination from '@mui/material/Pagination';
 
 
 
 export const Home = () => {
   const [data, setData] = useState([])
   const [recent, setRecent] = useState([])
+  const [pages, setPages] = useState("")
+  const [curPage, setCurPage] = useState(1)
   useEffect(()=>{
-    axios.get("https://blog-backend-react.herokuapp.com/blogs").then((res)=>{
-    setData(res.data)
+    axios.get(`https://blog1010.herokuapp.com/blogs?page=${curPage}`).then((res)=>{
+    setData(res.data.blogs)
+    setPages(res.data.pages)
     })
-  },[])
+  },[curPage])
 
   useEffect(()=>{
-    axios.get(`https://blog-backend-react.herokuapp.com/blogs/last`).then((res)=>{
+    axios.get(`https://blog1010.herokuapp.com/blogs/last`).then((res)=>{
       setRecent(res.data)
     })
   }, [])
 
   const filterCat = (e)=>{
     const category = e.target.id
-      axios.get(`https://blog-backend-react.herokuapp.com/blogs?category=${category}`).then((res)=>{
-        setData(res.data)
+      axios.get(`https://blog1010.herokuapp.com/blogs?category=${category}`).then((res)=>{
+        setData(res.data.blogs)
       })
   }
   
-  let userId = ""
-  const [token, setToken] = React.useState(localStorage.getItem("token") || "")
-  let loggedIn = ""
-  if(token){
-   loggedIn = jwt_decode(token)
-   userId = loggedIn.user._id
-  }
+const pageChange = (e)=>{
+  setCurPage(e.target.textContent)
+}
 
   const options = ["travel", "movie", "technology", "sports", "food", "fashion"]
 
@@ -47,9 +46,10 @@ export const Home = () => {
       <div className='blogs'>
       {data.map((el)=>{
         return(
-          <BlogCards key={el.id} title={el.title} description={el.description} _id={el._id} imgUrl={el.imgUrl} category={el.category} userId={el.userId} loggedId={userId}></BlogCards>
+          <BlogCards key={el.id} title={el.title} description={el.description} _id={el._id} imgUrl={el.imgUrl} category={el.category} userId={el.userId} ></BlogCards>
         )
       })}
+      <Pagination onChange={pageChange} style={{margin:"20px"}} count={pages} color="primary" />
       </div>
       <div className='right-panel'>
         <div className='recent-posts'>
@@ -69,6 +69,7 @@ export const Home = () => {
             })}
         </div>
       </div>
+      
     </div>
   )
 }
