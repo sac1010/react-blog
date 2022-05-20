@@ -4,7 +4,7 @@ const blogsSchema = new Schema(
     {
         title: {type: String, required:true  },
         date:{type:String},
-        imgUrl:{type:String},
+        imgUrl:{type:String, required:true},
         description:{type:String, required:true},
         category:{type:String, required:true},
         userId:{type:mongoose.Schema.ObjectId, ref:"user", required:true}

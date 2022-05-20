@@ -35,8 +35,12 @@ router.get("/", async(req, res)=>{
        if(req.query.category){
            filter.category = req.query.category
        }
-        const blogs = await Blogs.find(filter).lean().exec()
-        res.send(blogs)
+       const page = req.query.page || 1
+       const size = 6
+        const blogs = await Blogs.find(filter).skip((page-1)*size).limit(size).lean().exec()
+        const num = await Blogs.countDocuments().lean().exec()
+        const pages = Math.ceil(num/size)
+        res.send({blogs, pages:pages})
     }
     catch(err){
         res.send(err.message)
@@ -64,6 +68,28 @@ router.get("/user/:id", async(req, res)=>{
     }
     catch(err){
         res.send(err.message) 
+    }
+    
+})
+
+router.delete("/delete/:id", async(req, res)=>{
+    try{
+        const deleted = await Blogs.findByIdAndDelete(req.params.id)
+        res.send("deleted")
+    }
+    catch(err){
+        res.send(err.message)
+    }
+    
+})
+
+router.post("/edit/:id", async(req, res)=>{
+    try{
+        const blog = await Blogs.findByIdAndUpdate(req.params.id, req.body).lean().exec()
+        res.send(blog)
+    }
+    catch(err){
+        res.send(err.message)
     }
     
 })
